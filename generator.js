@@ -22,14 +22,44 @@ NodeProjectGenerator.prototype.prompts =
 [ {
     name: 'name',
     message: 'Name of this widget',
-    validate: required
+    validate: required,
+    default: 'Hoozit'
+  },
+  {
+      name: 'description',
+      message: 'Short description of this widget',
+      validate: required
   },
   {
       name: 'path',
       message: 'Path of widgets',
       validate: required,
       default: './components/site/widgets'
-    }
+  },
+  {
+      name: 'adminPath',
+      message: 'Admin Path of widgets',
+      validate: required,
+      default: './components/admin/widgets'
+  },
+  {
+      name: 'sectionWidget',
+      message: 'Can this be added to Sections',
+      validate: required,
+      default: true
+  },
+  {
+      name: 'bodyComponentWidget',
+      message: 'Can this be added to an Articles Body',
+      validate: required,
+      default: false
+  },
+  {
+      name: 'articleLayoutWidget',
+      message: 'Can this be added to an Articles Layout',
+      validate: required,
+      default: false
+  }
 ]
 
 NodeProjectGenerator.prototype._generate = function (path, config, cb) {
@@ -40,6 +70,7 @@ NodeProjectGenerator.prototype._generate = function (path, config, cb) {
     if (err) return cb(err)
     try {
       renameSync(join(path, config.path, 'Blank'), join(path, config.path, config.filename))
+      renameSync(join(path, config.adminPath, 'blank'), join(path, config.adminPath, config.filename))
     } catch (e) {
       console.error(e)
     }
