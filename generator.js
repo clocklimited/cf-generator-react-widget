@@ -76,8 +76,8 @@ NodeProjectGenerator.prototype._generate = function (path, config, cb) {
     }
     renameSync(join(path, config.path, config.filename, 'component', 'Blank.js'),
       join(path, config.path, config.filename, 'component', `${config.nameNoSpace}.js`))
-    renameSync(join(path, config.path, config.filename, 'test', 'Blank.test.js'),
-      join(path, config.path, config.filename, 'test', `${config.nameNoSpace}.test.js`))
+    renameSync(join(path, config.path, config.filename, 'component/test', 'Blank.test.js'),
+      join(path, config.path, config.filename, 'component/test', `${config.nameNoSpace}.test.js`))
     cb()
   })
 }
