@@ -1,20 +1,27 @@
-module.exports = initWidget
+const FormView = require('./views/form')
+const Model = require('./models/model')
+const ItemView = require('../../widget/views/item/edit-base')
 
-function initWidget () {
-  return { <%= camelName %>Widget: init }
-}
+const init = (serviceLocator, done) => {
+  const widget = {
+    editView: FormView,
+    model: Model,
+    itemView: ItemView,
+    name: '<%= name %>',
+    description: '<%= description %>'
+  }
+<%
+var factories = []
+if (sectionWidget) factories.push('section')
+if (bodyComponentWidget) factories.push('articleBody')
+if (articleLayoutWidget) factories.push('article')
+%>
+  <%= `[ '${factories.join('\', \'')}' ]` %>.forEach(factory =>
+    serviceLocator.widgetFactories.get(factory).register('<%= camelName %>', widget))
 
-function init (serviceLocator, done) {
-  var widget =
-    { editView: require('./views/form'),
-      model: require('./models/model'),
-      itemView: require('../../widget/views/item/edit-base'),
-      name: '<%= name %>',
-      description: '<%= description %>'
-    }
-
-<%= sectionWidget && `  serviceLocator.widgetFactory.register('${camelName}', widget)\n`
-%><%= bodyComponentWidget && `  serviceLocator.bodyComponentWidgetFactory.register('${camelName}', widget)\n`
-%><%= articleLayoutWidget && `  serviceLocator.articleLayoutWidgetFactory.register('${camelName}', widget)\n` %>
   done()
 }
+
+const initWidget = () => ({ <%= camelName %>Widget: init })
+
+module.exports = initWidget
