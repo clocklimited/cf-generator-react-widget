@@ -22,6 +22,6 @@ if (articleLayoutWidget) factories.push('article')
   done()
 }
 
-const initWidget = () => ({ <%= camelName %>Widget: init })
+const initWidget = () => ({ <%= camelName %>Widget: [ 'widget', 'sectionAdmin', init ] })
 
 module.exports = initWidget
